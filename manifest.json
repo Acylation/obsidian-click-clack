@@ -1,9 +1,9 @@
 {
-	"id": "typewriter-sound",
-	"name": "Typewriter Sound",
-	"version": "developer",
-	"minAppVersion": "0.15.0",
-	"description": "This is a sample plugin for Obsidian. This plugin demonstrates some of the capabilities of the Obsidian API.",
+	"id": "typewriter-sounds",
+	"name": "Typewriter Sounds",
+	"version": "0.0.1",
+	"minAppVersion": "1.0.0",
+	"description": "Simulates typewriter sounds in Obsidian.md",
 	"author": "Acylation",
 	"authorUrl": "https://github.com/Acylation",
 	"isDesktopOnly": false
