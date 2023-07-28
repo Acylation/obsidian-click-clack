@@ -34,13 +34,10 @@ export default class TWSoundPlugin extends Plugin {
 		// If the plugin hooks up any global DOM events (on parts of the app that doesn't belong to this plugin)
 		// Using this function will automatically remove the event listener when this plugin is disabled.
 		this.registerDomEvent(document, 'keydown', (evt: KeyboardEvent) => {
-			console.log('keypress', evt);
 			audioEl.src = buildPluginStaticResourceSrc(
 				this,
 				'resource/selectric-mode/selectric-type.wav'
 			);
-			console.log(audioEl);
-			console.log(audioEl.src);
 			audioEl.play();
 		});
 	}
