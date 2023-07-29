@@ -1,11 +1,4 @@
-import {
-	App,
-	Modal,
-	Notice,
-	Plugin,
-	PluginSettingTab,
-	Setting,
-} from 'obsidian';
+import { App, Plugin, PluginSettingTab, Setting } from 'obsidian';
 import * as path from 'path';
 
 const AUDIO_ID = 'typewriter-sound-plugin-audio';
