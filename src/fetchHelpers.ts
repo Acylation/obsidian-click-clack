@@ -62,15 +62,15 @@ export const checkOrDownload = async () => {
 };
 
 const download = async (name: string, localPath: string) => {
-	new Notice(`Click clack: Downloading ${name}!`, 5000);
+	new Notice(`Click Clack: Downloading ${name}!`, 5000);
 	try {
 		await fetchAsset(name, localPath);
 		new Notice(
-			`Click clack: Resource ${name} successfully downloaded! ✔️`,
+			`Click Clack: Resource ${name} successfully downloaded! ✔️`,
 			5000
 		);
 	} catch (error) {
-		new Notice(`Click clack: Failed to fetch ${name}: ${error} ❌`);
+		new Notice(`Click Clack: Failed to fetch ${name}: ${error} ❌`);
 		throw Error(`Failed to fetch resource ${name} from GitHub release.`);
 	}
 };

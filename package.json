@@ -1,6 +1,6 @@
 {
 	"name": "click-clack",
-	"version": "0.1.0",
+	"version": "0.1.1",
 	"description": "Make some noise when typing in Obsidian.md!",
 	"main": "main.js",
 	"scripts": {
@@ -10,8 +10,8 @@
 		"lint": "eslint ./src"
 	},
 	"keywords": [
-		"mechanical-keyboard",
 		"typewriter",
+		"mechanical-keyboard",
 		"obsidian",
 		"obsidian-plugin",
 		"obsidian-md",

@@ -1,10 +1,11 @@
 {
 	"id": "click-clack",
-	"name": "Click clack",
-	"version": "0.1.0",
+	"name": "Click Clack",
+	"version": "0.1.1",
 	"minAppVersion": "1.0.0",
-	"description": "Simulates typewriter sounds in Obsidian.md",
+	"description": "Simulates typewriter / mechanical keyboard sounds in Obsidian.",
 	"author": "Acylation",
 	"authorUrl": "https://github.com/Acylation",
+	"fundingUrl": "https://ko-fi.com/Acylation",
 	"isDesktopOnly": false
 }
