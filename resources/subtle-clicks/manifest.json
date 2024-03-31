@@ -1,0 +1,9 @@
+{
+    "id": "subtle-clicks",
+    "caption": "Subtle clicks",
+    "key": "key.wav",
+    "key2": "key2.wav",
+    "enter": "enter.wav",
+    "space": "space.wav",
+    "delete": "delete.wav"
+}

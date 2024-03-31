@@ -1,0 +1,9 @@
+{
+    "id": "cherry-mx-red",
+    "caption": "Cherry MX Red",
+    "key": "key.wav",
+    "key2": "key2.wav",
+    "enter": "enter.wav",
+    "space": "space.wav",
+    "delete": "delete.wav"
+}
