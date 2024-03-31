@@ -19,7 +19,7 @@ export class ClickClackSettingTab extends PluginSettingTab {
 
 		new Setting(containerEl)
 			.setName('Enable sound')
-			.setDesc('Disable sound temporarily.')
+			.setDesc('Enable / disable sound temporarily.')
 			.addToggle((toggle) => {
 				toggle
 					.setTooltip('toggle to another state (dynamic str later)')
@@ -31,8 +31,8 @@ export class ClickClackSettingTab extends PluginSettingTab {
 			});
 
 		new Setting(containerEl)
-			.setName('Volumn')
-			.setDesc('Adjust keyboard sound volumn')
+			.setName('Volume')
+			.setDesc('Adjust keyboard sound volume.')
 			.addSlider((slider) => {
 				slider
 					.setLimits(0.0, 100, 1.0)
@@ -53,7 +53,7 @@ export class ClickClackSettingTab extends PluginSettingTab {
 
 		const schemeSetting = new Setting(containerEl)
 			.setName('Scheme')
-			.setDesc('Select scheme')
+			.setDesc('Select scheme.')
 			.addExtraButton((button) => {
 				button.setIcon('refresh-cw').onClick(async () => {
 					dropdown.selectEl.empty();
@@ -78,7 +78,9 @@ export class ClickClackSettingTab extends PluginSettingTab {
 
 		new Setting(containerEl)
 			.setName('Download')
-			.setDesc('Download resources')
+			.setDesc(
+				'Fetching resources from github release. Please refresh the scheme list after resources are successfully downloaded.'
+			)
 			.addButton((button) =>
 				button
 					.setCta()
