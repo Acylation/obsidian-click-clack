@@ -3,7 +3,7 @@
 	"name": "Click Clack",
 	"version": "0.1.1",
 	"minAppVersion": "1.0.0",
-	"description": "Simulates typewriter / mechanical keyboard sounds in Obsidian.",
+	"description": "Simulates typewriter / mechanical keyboard sounds.",
 	"author": "Acylation",
 	"authorUrl": "https://github.com/Acylation",
 	"fundingUrl": "https://ko-fi.com/Acylation",
