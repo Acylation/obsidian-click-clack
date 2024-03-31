@@ -1,48 +1,76 @@
-import { App, Plugin, PluginSettingTab, Setting } from 'obsidian';
-import * as path from 'path';
+import { Plugin, App, PluginManifest } from 'obsidian';
 
-const AUDIO_ID = 'typewriter-sound-plugin-audio';
+import { DEFAULT_MAP, keySoundMap } from './keySoundMap';
+import { ClickClackSettings, DEFAULT_SETTINGS_V1 } from './settings';
+import { ClickClackSettingTab } from './SettingTab';
+import { loadScheme } from './schemeHelpers';
 
-interface TWSoundSettings {
-	mySetting: string;
+export interface Sounds {
+	key: Howl;
+	key2: Howl;
+	enter: Howl;
+	space: Howl;
+	delete: Howl;
 }
+import { defaultSounds } from './defaultSound';
 
-const DEFAULT_SETTINGS: TWSoundSettings = {
-	mySetting: 'default',
-};
+export default class ClickClackPlugin extends Plugin {
+	settings: ClickClackSettings;
+	sounds: Sounds;
 
-export default class TWSoundPlugin extends Plugin {
-	settings: TWSoundSettings;
+	constructor(app: App, manifest: PluginManifest) {
+		super(app, manifest);
+		this.sounds = defaultSounds;
+	}
 
 	async onload() {
 		await this.loadSettings();
+		this.addSettingTab(new ClickClackSettingTab(this.app, this));
+		this.sounds = await loadScheme(this.settings.activeScheme);
+		this.registerDomEvent(
+			this.app.workspace.containerEl,
+			'keydown',
+			(evt: KeyboardEvent) => {
+				if (!this.settings.enabled) return;
+				if (evt.ctrlKey) return;
+				if (evt.metaKey) return;
+				if (evt.altKey && !evt.ctrlKey && !evt.metaKey) return;
+				// if (evt.repeat) return;
 
-		const audioEl = document.createElement('audio');
-		audioEl.id = AUDIO_ID;
-		document.body.appendChild(audioEl);
+				// this.stopSounds(); // stop overlaid
+				this.sounds[
+					DEFAULT_MAP[evt.code as keyof keySoundMap] as keyof Sounds
+				]?.play();
+			}
+		);
 
-		// This adds a settings tab so the user can configure various aspects of the plugin
-		this.addSettingTab(new SampleSettingTab(this.app, this));
+		this.addCommand({
+			id: 'enable click clack sound',
+			name: 'enable click clack sound',
+			checkCallback: (checking: boolean) => {
+				if (checking) return !this.settings.enabled;
+				this.toggleSound(true);
+			},
+		});
 
-		// If the plugin hooks up any global DOM events (on parts of the app that doesn't belong to this plugin)
-		// Using this function will automatically remove the event listener when this plugin is disabled.
-		this.registerDomEvent(document, 'keydown', (evt: KeyboardEvent) => {
-			audioEl.src = buildPluginStaticResourceSrc(
-				this,
-				'resource/selectric-mode/selectric-type.wav'
-			);
-			audioEl.play();
+		this.addCommand({
+			id: 'disable click clack sound',
+			name: 'disable click clack sound',
+			checkCallback: (checking: boolean) => {
+				if (checking) return this.settings.enabled;
+				this.toggleSound(false);
+			},
 		});
 	}
 
 	onunload() {
-		document.getElementById(AUDIO_ID)?.remove();
+		this.unloadSounds();
 	}
 
 	async loadSettings() {
 		this.settings = Object.assign(
 			{},
-			DEFAULT_SETTINGS,
+			DEFAULT_SETTINGS_V1,
 			await this.loadData()
 		);
 	}
@@ -50,44 +78,25 @@ export default class TWSoundPlugin extends Plugin {
 	async saveSettings() {
 		await this.saveData(this.settings);
 	}
-}
 
-// https://forum.obsidian.md/t/support-for-assets-in-plugins/25837/2
-export function buildPluginStaticResourceSrc(plug: Plugin, assetPath: string) {
-	return plug.app.vault.adapter.getResourcePath(
-		path.join(
-			plug.app.vault.configDir,
-			'plugins',
-			plug.manifest.id,
-			assetPath
-		)
-	);
-}
-
-class SampleSettingTab extends PluginSettingTab {
-	plugin: TWSoundPlugin;
-
-	constructor(app: App, plugin: TWSoundPlugin) {
-		super(app, plugin);
-		this.plugin = plugin;
+	async toggleSound(targetState: boolean) {
+		this.settings.enabled = targetState;
+		await this.saveSettings();
 	}
 
-	display(): void {
-		const { containerEl } = this;
+	async refreshSounds() {
+		this.sounds = await loadScheme(this.settings.activeScheme);
+	}
 
-		containerEl.empty();
+	stopSounds() {
+		for (const key in this.sounds) {
+			this.sounds[key as keyof Sounds].stop();
+		}
+	}
 
-		new Setting(containerEl)
-			.setName('Setting #1')
-			.setDesc("It's a secret")
-			.addText((text) =>
-				text
-					.setPlaceholder('Enter your secret')
-					.setValue(this.plugin.settings.mySetting)
-					.onChange(async (value) => {
-						this.plugin.settings.mySetting = value;
-						await this.plugin.saveSettings();
-					})
-			);
+	unloadSounds() {
+		for (const key in this.sounds) {
+			this.sounds[key as keyof Sounds].unload();
+		}
 	}
 }
