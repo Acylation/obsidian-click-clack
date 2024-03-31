@@ -1,3 +1,3 @@
-# Obsidian Typewriter Sounds
+# Obsidian Click Clack
 
-Simulates typewriter sounds in Obsidian.md
+在 Obsidian 中模拟机械键盘、打字机按键音。
