@@ -1,7 +1,7 @@
 {
 	"name": "click-clack",
 	"version": "0.1.1",
-	"description": "Make some noise when typing in Obsidian.md!",
+	"description": "Simulates typewriter / mechanical keyboard sounds.",
 	"main": "main.js",
 	"scripts": {
 		"dev": "node esbuild.config.mjs",
