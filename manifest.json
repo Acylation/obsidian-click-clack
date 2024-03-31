@@ -1,6 +1,6 @@
 {
-	"id": "typewriter-sounds",
-	"name": "Typewriter Sounds",
+	"id": "click-clack",
+	"name": "Click clack",
 	"version": "0.0.1",
 	"minAppVersion": "1.0.0",
 	"description": "Simulates typewriter sounds in Obsidian.md",

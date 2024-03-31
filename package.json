@@ -1,7 +1,7 @@
 {
-	"name": "typewriter-sounds",
-	"version": "0.0.1",
-	"description": "Simulates typewriter sounds in Obsidian.md",
+	"name": "click-clack",
+	"version": "0.1.0",
+	"description": "Make some noise when typing in Obsidian.md!",
 	"main": "main.js",
 	"scripts": {
 		"dev": "node esbuild.config.mjs",
@@ -10,6 +10,7 @@
 		"lint": "eslint ./src"
 	},
 	"keywords": [
+		"mechanical-keyboard",
 		"typewriter",
 		"obsidian",
 		"obsidian-plugin",
@@ -19,6 +20,7 @@
 	"author": "Acylation",
 	"license": "MIT",
 	"devDependencies": {
+		"@types/howler": "^2.2.8",
 		"@types/node": "^16.11.6",
 		"@typescript-eslint/eslint-plugin": "5.29.0",
 		"@typescript-eslint/parser": "5.29.0",
