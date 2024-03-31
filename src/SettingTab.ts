@@ -3,6 +3,7 @@ import { PluginSettingTab, Setting, App, DropdownComponent } from 'obsidian';
 import { getScheme, getInstalledSchemes, loadScheme } from './schemeHelpers';
 import { defaultScheme } from './defaultSound';
 import { checkOrDownload } from './fetchHelpers';
+import { i18n } from './libs/i18n';
 
 export class ClickClackSettingTab extends PluginSettingTab {
 	plugin: ClickClackPlugin;
@@ -18,11 +19,9 @@ export class ClickClackSettingTab extends PluginSettingTab {
 		containerEl.empty();
 
 		new Setting(containerEl)
-			.setName('Enable sound')
-			.setDesc('Enable / disable sound temporarily.')
+			.setName(i18n.t('settings.toggle-sound.name'))
 			.addToggle((toggle) => {
 				toggle
-					.setTooltip('toggle to another state (dynamic str later)')
 					.setValue(this.plugin.settings.enabled)
 					.onChange(async (value) => {
 						this.plugin.settings.enabled = value;
@@ -31,8 +30,8 @@ export class ClickClackSettingTab extends PluginSettingTab {
 			});
 
 		new Setting(containerEl)
-			.setName('Volume')
-			.setDesc('Adjust keyboard sound volume.')
+			.setName(i18n.t('settings.volume.name'))
+			.setDesc(i18n.t('settings.volume.desc'))
 			.addSlider((slider) => {
 				slider
 					.setLimits(0.0, 100, 1.0)
@@ -49,16 +48,19 @@ export class ClickClackSettingTab extends PluginSettingTab {
 					});
 			});
 
-		new Setting(containerEl).setName('Sound resource').setHeading();
+		new Setting(containerEl)
+			.setName(i18n.t('settings.resource'))
+			.setHeading();
 
 		const schemeSetting = new Setting(containerEl)
-			.setName('Scheme')
-			.setDesc('Select scheme.')
+			.setName(i18n.t('settings.scheme.name'))
 			.addExtraButton((button) => {
 				button.setIcon('refresh-cw').onClick(async () => {
 					dropdown.selectEl.empty();
 					dropdown
-						.addOptions({ default: 'Default' })
+						.addOptions({
+							default: i18n.t('settings.scheme.default'),
+						})
 						.addOptions(await getInstalledSchemes())
 						.setValue(this.plugin.settings.activeScheme.id);
 				});
@@ -66,7 +68,7 @@ export class ClickClackSettingTab extends PluginSettingTab {
 
 		const dropdown = new DropdownComponent(schemeSetting.controlEl);
 		dropdown
-			.addOptions({ default: 'Default' })
+			.addOptions({ default: i18n.t('settings.scheme.default') })
 			.addOptions(await getInstalledSchemes())
 			.setValue(this.plugin.settings.activeScheme.id)
 			.onChange(async (value) => {
@@ -77,14 +79,12 @@ export class ClickClackSettingTab extends PluginSettingTab {
 			});
 
 		new Setting(containerEl)
-			.setName('Download')
-			.setDesc(
-				'Fetching resources from github release. Please refresh the scheme list after resources are successfully downloaded.'
-			)
+			.setName(i18n.t('settings.download.name'))
+			.setDesc(i18n.t('settings.download.desc'))
 			.addButton((button) =>
 				button
 					.setCta()
-					.setButtonText('Download')
+					.setButtonText(i18n.t('settings.download.button'))
 					.setIcon('download')
 					.onClick(async () => {
 						await checkOrDownload();

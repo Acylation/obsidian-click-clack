@@ -1,0 +1,23 @@
+{
+    "translation": {
+        "settings": {
+            "toggle-sound": {
+                "name": "开启/关闭声音"
+            },
+            "volume": {
+                "name": "音量",
+                "desc": "调整按键音效音量。"
+            },
+            "resource": "声音资源",
+            "scheme": {
+                "name": "音效主题",
+                "default": "默认"
+            },
+            "download": {
+                "name": "下载声音资源",
+                "desc": "从 GitHub release 下载音效资源。下载完成后请刷新音效主题列表。",
+                "button": "下载"
+            }
+        }
+    }
+}

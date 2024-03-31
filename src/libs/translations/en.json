@@ -1,0 +1,23 @@
+{
+    "translation": {
+        "settings": {
+            "toggle-sound": {
+                "name": "Toggle sound"
+            },
+            "volume": {
+                "name": "Volume",
+                "desc": "Adjust key sound volume."
+            },
+            "resource": "Sound resource",
+            "scheme": {
+                "name": "Sound scheme",
+                "default": "Default"
+            },
+            "download": {
+                "name": "Download resources",
+                "desc": "Download resources from GitHub release. Please refresh the scheme list after downloaded.",
+                "button": "Download"
+            }
+        }
+    }
+}
