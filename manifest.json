@@ -1,7 +1,7 @@
 {
 	"id": "click-clack",
 	"name": "Click Clack",
-	"version": "0.1.1",
+	"version": "0.1.2",
 	"minAppVersion": "1.0.0",
 	"description": "Simulates typewriter / mechanical keyboard sounds.",
 	"author": "Acylation",
