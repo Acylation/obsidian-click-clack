@@ -3,7 +3,6 @@ import { Plugin, App, PluginManifest } from 'obsidian';
 import { DEFAULT_MAP, keySoundMap } from './keySoundMap';
 import { ClickClackSettings, DEFAULT_SETTINGS_V1 } from './settings';
 import { ClickClackSettingTab } from './SettingTab';
-import { loadScheme } from './schemeHelpers';
 
 export interface Sounds {
 	key: Howl;
@@ -13,20 +12,25 @@ export interface Sounds {
 	delete: Howl;
 }
 import { defaultSounds } from './defaultSound';
+import { SchemeHelper } from './schemeHelper';
 
 export default class ClickClackPlugin extends Plugin {
 	settings: ClickClackSettings;
 	sounds: Sounds;
+	schemeHelper: SchemeHelper;
 
 	constructor(app: App, manifest: PluginManifest) {
 		super(app, manifest);
 		this.sounds = defaultSounds;
+		this.schemeHelper = new SchemeHelper(app);
 	}
 
 	async onload() {
 		await this.loadSettings();
 		this.addSettingTab(new ClickClackSettingTab(this.app, this));
-		this.sounds = await loadScheme(this.settings.activeScheme);
+		this.sounds = await this.schemeHelper.loadScheme(
+			this.settings.activeScheme
+		);
 		this.registerDomEvent(
 			this.app.workspace.containerEl,
 			'keydown',
@@ -85,7 +89,9 @@ export default class ClickClackPlugin extends Plugin {
 	}
 
 	async refreshSounds() {
-		this.sounds = await loadScheme(this.settings.activeScheme);
+		this.sounds = await this.schemeHelper.loadScheme(
+			this.settings.activeScheme
+		);
 	}
 
 	stopSounds() {

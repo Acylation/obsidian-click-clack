@@ -1,16 +1,17 @@
 import ClickClackPlugin, { Sounds } from './main';
 import { PluginSettingTab, Setting, App, DropdownComponent } from 'obsidian';
-import { getScheme, getInstalledSchemes, loadScheme } from './schemeHelpers';
 import { defaultScheme } from './defaultSound';
-import { checkOrDownload } from './fetchHelpers';
 import { i18n } from './libs/i18n';
+import { FetchHelper } from './fetchHelper';
 
 export class ClickClackSettingTab extends PluginSettingTab {
 	plugin: ClickClackPlugin;
+	fetchHelper: FetchHelper;
 
 	constructor(app: App, plugin: ClickClackPlugin) {
 		super(app, plugin);
 		this.plugin = plugin;
+		this.fetchHelper = new FetchHelper(app);
 	}
 
 	async display(): Promise<void> {
@@ -61,7 +62,9 @@ export class ClickClackSettingTab extends PluginSettingTab {
 						.addOptions({
 							default: i18n.t('settings.scheme.default'),
 						})
-						.addOptions(await getInstalledSchemes())
+						.addOptions(
+							await this.plugin.schemeHelper.getInstalledSchemes()
+						)
 						.setValue(this.plugin.settings.activeScheme.id);
 				});
 			});
@@ -69,12 +72,16 @@ export class ClickClackSettingTab extends PluginSettingTab {
 		const dropdown = new DropdownComponent(schemeSetting.controlEl);
 		dropdown
 			.addOptions({ default: i18n.t('settings.scheme.default') })
-			.addOptions(await getInstalledSchemes())
+			.addOptions(await this.plugin.schemeHelper.getInstalledSchemes())
 			.setValue(this.plugin.settings.activeScheme.id)
 			.onChange(async (value) => {
-				const scheme = (await getScheme(value)) ?? defaultScheme;
+				const scheme =
+					(await this.plugin.schemeHelper.getScheme(value)) ??
+					defaultScheme;
 				this.plugin.settings.activeScheme = scheme;
-				this.plugin.sounds = await loadScheme(scheme);
+				this.plugin.sounds = await this.plugin.schemeHelper.loadScheme(
+					scheme
+				);
 				await this.plugin.saveSettings();
 			});
 
@@ -87,7 +94,7 @@ export class ClickClackSettingTab extends PluginSettingTab {
 					.setButtonText(i18n.t('settings.download.button'))
 					.setIcon('download')
 					.onClick(async () => {
-						await checkOrDownload();
+						await this.fetchHelper.checkOrDownload();
 					})
 			);
 	}
