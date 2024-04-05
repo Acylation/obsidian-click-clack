@@ -7,8 +7,8 @@
 Simulates typewriter / mechanical keyboard sounds in Obsidian.
 
 > [!Note]
-> Latest release: 0.1.1  
-> Document version: 0.1.1  
+> Latest release: 0.1.2  
+> Document version: 0.1.2  
 
 ## Installation
 
